@@ -1,0 +1,40 @@
+
+.traditional-hotels {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .traditional-hotel {
+        flex: 1;
+        overflow: hidden;
+        border-radius: 0.3rem;
+
+        .traditional-hotel-image img {
+            height: 15rem;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .name-and-price {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6rem;
+
+            .traditional-hotel-title {
+                font-weight: 900;
+            }
+
+            .traditional-hotel-price {
+                font-weight: 700;
+            }
+        }
+
+        .traditional-hotel-rating {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+    }
+}

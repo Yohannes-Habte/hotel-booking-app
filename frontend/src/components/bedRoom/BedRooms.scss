@@ -1,0 +1,32 @@
+.bedRooms-container {
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  .bedRooms {
+    height: 20rem;
+    flex: 1; 
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.3rem;
+    
+    .bedRoom-image {
+      height: 15rem;
+      & img {
+        height: 15rem;
+      }
+    }
+
+    .bedRoom-title {
+      color: blue;
+      padding: 0.5rem 1rem;
+    }
+
+    .bedRoom-number {
+        color: blue;
+        padding: 0 1rem;
+    }
+  }
+}

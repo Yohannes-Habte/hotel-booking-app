@@ -1,0 +1,48 @@
+@import "../../styles/Variables.scss";
+
+.navbar {
+  background-color: $header;
+  color: $header-color;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+
+  .nav-container {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .navigation-item {
+        padding: 0 1rem;
+        list-style: none;
+
+        & a {
+          text-decoration: none;
+          color: white;
+        }
+      }
+    }
+
+    .navbar-btn-container {
+      .navbar-btn {
+        margin-left: 20px;
+        padding: 5px 10px;
+        border: none;
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.2rem;
+        font-size: 1rem;
+        cursor: pointer;
+        background-color: #0071c2;
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+}

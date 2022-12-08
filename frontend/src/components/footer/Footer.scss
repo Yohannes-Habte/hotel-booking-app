@@ -1,0 +1,22 @@
+.footer {
+  width: 100%;
+
+  .footer-lists {
+    width: 90%;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    .footer-unodered-lists li {
+        padding: 0.2rem 0;
+    }
+  }
+
+  .footer-copyright {
+    width: 50%;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-around;
+  }
+}

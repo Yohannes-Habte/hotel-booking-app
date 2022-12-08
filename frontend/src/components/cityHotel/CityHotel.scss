@@ -1,0 +1,35 @@
+.city-based-hotels {
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 1;
+
+  .feactured-items {
+    height: 20rem;
+    position: relative;
+    overflow: hidden;
+
+    .hotel-image img {
+      width: 100%;
+      object-fit: cover;
+      height: 20rem;
+      object-fit: cover;
+    }
+
+    .feturedtitle {
+      position: absolute;
+      bottom: 40px;
+      left: 20px;
+      color: white;
+    }
+
+    .featuredNumber {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+    }
+  }
+}
