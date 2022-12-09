@@ -29,15 +29,16 @@ export const adminPost = async (req, res, next) => {
 // =====================================================
 
 export const loginUser = async (req, res, next) => {
+    const { username, password } = req.body;
     try{
-        const user = await User.findOne({username: req.body.username});
+        const user = await User.findOne({username: username});
         if(!user) return next(createError(404, "User not found"));
 
-        const isvalidPassword = await bcrypt.compare(req.body.password, user.password);
+        const isvalidPassword = await bcrypt.compare(password, user.password);
         if(!isvalidPassword) return next(createError(400, "Invalid password"));
 
-        // Token
-        const token = jwt.sign({id: user._id, isAdmin: user.isAdmin}, process.env.JWT)
+        // Token to verify the identity of the user
+        const token = jwt.sign({id: user._id, isAdmin: user.isAdmin}, process.env.JWT);
 
         const { password, isAdmin, ...otherDetails } = user; // This is used to display all excepte admin and password
 

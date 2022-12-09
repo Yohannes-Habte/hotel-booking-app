@@ -16,38 +16,27 @@ import globalErrorHandler from "./middleware/globalErrorHandler.js";
 const app = express();
 app.use(cors());
 //! Step 2 for "cookie-aarser"
-app.use(cookieParser());
+app.use(cookieParser()); 
 
 app.use(express.json());
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000; 
 
 dotenv.config();
-const connect = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO);
-        console.log("Connected to mongoDB")
-      } catch (error) {
-        throw error;
-      }
-};
+mongoose.connect(process.env.MONGO);
+mongoose.connection.on("open", () => console.log("Database connection established"));
+mongoose.connection.on("error", () => console.error); 
+// Every changes will be informed 
+app.use(morgan("tiny"));
 
-mongoose.connection.on("disconnected", () => {
-  console.log("MongoDB disconnected")
-});
-
-// End points
+// Express middleware - End Points
 app.use("/users", userRoute);
 app.use("/hotels", hotelRoute);
 app.use("/rooms", roomRoute);
 app.use("/admin", adminRoute);
 
-// Every changes will be informed 
-app.use(morgan("tiny"));
-
-// Error handler
+// Express middleware - Error handler
 app.use(globalErrorHandler);
 
-app.listen(PORT, () => {
-    connect()
+app.listen(PORT, () => { 
   console.log(`The server has started on port ${PORT}`);
 });

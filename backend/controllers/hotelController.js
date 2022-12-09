@@ -8,30 +8,30 @@ export const hotelPost = async (req, res, next) => {
     const newHotel = new Hotel(req.body);
 
     try{
-        const saveHotel = await newHotel.save();
-        return res.status(200).json(saveHotel);
+        const saveNewHotel = await newHotel.save();
+        res.status(201).json(saveNewHotel);
     }catch(err){
-        console.log(err);
-        return next(createError(500, "Hotel could not be posted in the database"))
+        console.log(err)
+        return next(createError(500, "The hotel could not be saved in the database!"))
     }
 }; 
 
 // =====================================================
 // Apdate Booking a Hotel
-// =====================================================
-export const updateHotelBooking = async (req, res, next) => {
+// ===================================================== 
+export const updatedBookedHotel = async (req, res, next) => {
     const hotelId = req.parmas.id;
     try{
-        const updatedHotel = await Hotel.findByIdAndUpdate(hotelId, {$set: req.body}, {new: true});
-        return res.status(200).json(updatedHotel);
+        const updatedHotel = await Hotel.findByIdAndUpdate(req.parmas.id, {$set: req.body}, {new: true, runValidators: ture});
+        return res.status(201).json(updatedHotel);
     }catch(err){
         console.log(err);
-        return next(createError(500, "Hotel could not be posted in the database"))
+        return next(createError(500, "Booked Hotel could not be updated in the database"));
     }
 };
 
 // =====================================================
-// Delete Booking a Hotel
+// Delete Booking a Hotel 
 // =====================================================
 export const deleteBookedHotel = async (req, res, next) => {
     const hotelId = req.parmas.id;
@@ -40,7 +40,7 @@ export const deleteBookedHotel = async (req, res, next) => {
         return res.status(200).json("Hotel booking has been deleted");
     }catch(err){
         console.log(err);
-        return next(createError(500, "Hotel could not be posted in the database"))
+        return next(createError(500, " Booked Hotel could not be deleted from the database"))
     }
 };
 
@@ -68,7 +68,7 @@ export const getAllHotels = async (req, res, next) => {
     }catch(err){
         console.log(err);
         return next(createError(500, "Hotel could not be posted in the database"))
-    }
+    } 
 };
 
 // =====================================================
