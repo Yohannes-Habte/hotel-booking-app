@@ -7,15 +7,16 @@ import createError from "http-errors";
 // =====================================================
 
 export const roomPost = async (req, res, next) => {
-    const hotelId = req.params.hotelId
+    const hotelId = req.params.hotelId;
     const newRoom = new Room(req.body);
 
     try{
         const savedRoom = await newRoom.save();
-        try{
-            await Hotel.findByIdAndUpdate(hotelId, {$push: savedRoom._id})
+        try{//This additional "try, catch" is used to updated the hotel by adding the "savedRoom" to the rooms
+            await Hotel.findByIdAndUpdate(hotelId, {$push: {rooms: savedRoom._id}});
         }catch(err){
-            next(err)
+            console.log(err);
+            return next(createError(500, "The hotel could not be updated"))
         };
 
         return res.status(200).json(savedRoom);
@@ -34,7 +35,7 @@ export const updateRoom = async (req, res, next) => {
         const updatedRoom = await Room.findByIdAndUpdate(
             req.params.id,
             {$set: req.body},
-            {new: true}
+            {new: true, runValidators: true}
         );
         return res.status(200).json(updatedRoom)
     }catch(err){
@@ -48,17 +49,17 @@ export const updateRoom = async (req, res, next) => {
 // =====================================================
 
 export const deleteRoom = async (req, res, next) => {
-    const hotelId = get.params.id;
+    const hotelId = req.params.hotelId;
     try{
         await Room.findByIdAndDelete(req.params.id);
 
         try {
-            await Hotel.findByIdAndDelete(hotelId, {$pull: {rooms: req.params.id}})
+            await Hotel.findByIdAndDelete(hotelId, {$pull: {rooms: req.params.id}});
         }catch(err){
             console.log(err);
-            return next(createError(500, "Hotel could not be deleted"))
+            return next(createError(500, "The room could not be deleted from the hotel database"));
         }
-        return res.status(200).json("Room has been deleted")
+        return res.status(200).json("Room has been deleted");
     }catch(err){
         console.log(err);
         return next(createError(500, "Room could not be deleted"))

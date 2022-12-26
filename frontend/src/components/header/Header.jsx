@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Header.scss";
 import { FaBed, FaPlane, FaCarSide, FaTaxi,  FaCalendarAlt } from "react-icons/fa";
 import { GiPerson } from "react-icons/gi";
@@ -49,6 +49,28 @@ const Header = ( { type } ) => {
     })
   };
 
+   // useRef to handle specific click event
+   const dateRef = useRef();
+   const optionsRef = useRef();
+ 
+   // UseEffect to handle clicks for the date-range and options
+   useEffect(() => {
+     let handler = (event) => {
+       if(!dateRef.current.contains(event.target)) {
+        setOpenDate(false);
+       }
+
+       if(!optionsRef.current.contains(event.target)) {
+        setOpenOptions(false);
+       }
+     };
+     document.addEventListener("mousedown", handler);
+     // to revove the event listener
+     return() => {
+       document.removeEventListener("mousedown", handler);
+     }
+   });
+
    // useNavigate used to navigate to "Hotel page"
   const navigate = useNavigate()
 
@@ -59,7 +81,7 @@ const Header = ( { type } ) => {
 
 
   return (
-    <section className="header">
+    <section className="header" ref={optionsRef || dateRef} >
       <article className={type === "list" ? "header-container list-mode" : "header-container"}>
         <div className="header-list">
           <div className="header-list-item active">
@@ -101,7 +123,7 @@ const Header = ( { type } ) => {
         </p>
         <button className="header-btn"> Sigin / Register</button>
 
-        <div className="header-search">
+        <div className="header-search" ref={dateRef} >
           <div className="header-search-icon">
             <FaBed className="search-icon" />
             <input
@@ -128,7 +150,7 @@ const Header = ( { type } ) => {
             /> }
           </div>
 
-          <div className="header-search-icon">
+          <div className="header-search-icon" >
             <GiPerson className="search-icon" />
             <span className="header-search-option" onClick={handleAdultChildrenRoom} >
               {`${options.adult} adult | ${options.children} children | ${options.room} room`}

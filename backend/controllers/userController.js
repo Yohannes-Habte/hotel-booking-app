@@ -1,6 +1,5 @@
 import User from "../models/userModel.js";
 import createError from "http-errors";
-import bcrypt from "bcryptjs"
 
 
 // =====================================================
@@ -35,11 +34,11 @@ export const userPost = async (req, res, next) => {
 export const updateUserData = async (req, res, next) => {
     const userId = req.parmas.id;
     try{
-        const updatedUser = await User.findByIdAndUpdate(userId, {$set: req.body}, {new: true});
+        const updatedUser = await User.findByIdAndUpdate(userId, {$set: req.body}, {new: true, runValidators: true});   
         return res.status(200).json(updatedUser);
     }catch(err){
         console.log(err);
-        return next(createError(500, "User data could not be updated in the database"))
+        return next(createError(404, "User data could not be updated in the database"))
     }
 };
 
@@ -67,7 +66,7 @@ export const getOneUser = async (req, res, next) => {
         return res.status(200).json(user);
     }catch(err){
         console.log(err);
-        return next(createError(500, "User could not be deleted from the database"))
+        return next(createError(500, "User could not be found in the database"))
     }
 };
 
@@ -77,7 +76,7 @@ export const getOneUser = async (req, res, next) => {
 export const getAllUsers = async (req, res, next) => {
     try{
         const users = await User.find();
-        return res.status(200).json(users);
+        return res.status(201).json(users);
     }catch(err){
         console.log(err);
         return next(createError(500, "Database could not fetch users"))

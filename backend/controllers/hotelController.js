@@ -62,8 +62,10 @@ export const getOneHotel = async (req, res, next) => {
 // Get All Hotels
 // =====================================================
 export const getAllHotels = async (req, res, next) => {
+    // To find hotel based on the prices
+    const { min, max, ...others } = req.query;
     try{
-        const Hotels = await Hotel.find();
+        const Hotels = await Hotel.find({...others, cheapestPrice: {$gt: min | 1, $lt: max || 900}}).limit(req.query.limit);
         return res.status(200).json(Hotels);
     }catch(err){
         console.log(err);
@@ -72,7 +74,7 @@ export const getAllHotels = async (req, res, next) => {
 };
 
 // =====================================================
-// Get All Hotels
+// Count Cities
 // =====================================================
 export const countByCity = async (req, res, next) => {
     const cities = req.query.cities.split(",")
@@ -84,5 +86,29 @@ export const countByCity = async (req, res, next) => {
     }catch(err){
         console.log(err);
         return next(createError(500, "Hotel could not be posted in the database"))
+    }
+};
+
+// =====================================================
+// Get All Hotels
+// =====================================================
+export const countByType = async (req, res, next) => {
+    try{
+        const hotelCount = await Hotel.countDocuments({type: "hotel"});
+        const apartmentCount = await Hotel.countDocuments({type: "apartment"});
+        const resortCount = await Hotel.countDocuments({type: "resort"});
+        const villaCount = await Hotel.countDocuments({type: "villa"});
+        const cabinCount = await Hotel.countDocuments({type: "cabin"});
+
+        return res.status(200).json([
+            {type: "hotel", count: hotelCount},
+            {type: "apartment", count: apartmentCount},
+            {type: "resort", count: resortCount},
+            {type: "villa", count: villaCount},
+            {type: "cabin", count: cabinCount}, 
+        ]);
+    }catch(err){
+        console.log(err)
+        return next (createError(500, "Count by type could not be queried from the database"))
     }
 };

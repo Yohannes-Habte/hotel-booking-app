@@ -10,7 +10,7 @@ export const verifyToken = (req, res, next) => {
     
     // Step 2: if token is not found
     if(!token) {
-        return next(createError(401, "You are not authenticated"))
+        return next(createError(401, "You are not authenticated"));
     }
 
     // Step 3: if token is found, then verify it
@@ -24,15 +24,14 @@ export const verifyToken = (req, res, next) => {
 };
 
 //==============================================================
-// Verify "User" using verify token
+// Verify "User" using "verifyToken" function stated above
 //==============================================================
-
 export const verifyUser = (req, res, next) => {
     verifyToken(req, res, next, ()=> {
-        if(req.user.id === req,params.id || req.user.isAdmin) {
+        if(req.user.id === req.params.id || req.user.isAdmin) {
             next();
         } else {
-            if(err) return next(createError(403, "You are not authorized"))
+            if(err) return next(createError(403, "You are not authorized"));
         }
     })
 };
@@ -40,13 +39,12 @@ export const verifyUser = (req, res, next) => {
 //==============================================================
 // Verify "Admin" using verify token
 //==============================================================
-
 export const verifyAdmin = (req, res, next) => {
     verifyToken(req, res, next, () => {
         if(req.user.isAdmin) {
-            next()
+            next();
         } else {
-            return next(createError(403, "You are unauthorized"))
+            return next(createError(403, "You are unauthorized"));
         }
     })
 };

@@ -6,6 +6,7 @@ import "./HotelLists.scss";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 import MailList from "../../components/mailList/MailList";
+import UseFetch from "../../hooks/UseFetch";
 
 const HotelLists = () => {
   // State variables
@@ -14,6 +15,13 @@ const HotelLists = () => {
   const [date, setDate] = useState(location.state.date);
   const [options, setOptions] = useState(location.state.options);
   const [openDate, setOpenDate] = useState(false);
+  const [min, setMin] = useState(undefined);
+  const [max, setMax] = useState(undefined);
+
+  const {data, loading, error} = UseFetch(`/hotels?city=${destination}&min=${min || 0}&max=${max || 999}`)
+
+  // Function that handle Search button 
+  const handleClick = () => {};
 
   return (
     <main>
@@ -51,14 +59,14 @@ const HotelLists = () => {
                   <span className="option-item-text">
                     Min Price <small>Per Night</small>
                   </span>
-                  <input type="number" className="option-item-input" />
+                  <input type="number" onChange={(event)=> setMin(event.target.value)} className="option-item-input" />
                 </div>
 
                 <div className="option-items">
                   <span className="option-item-text">
                     Max Price <small>Per Night</small>
                   </span>
-                  <input type="number" className="option-item-input" />
+                  <input type="number" onChange={(event)=> setMax(event.target.value)} className="option-item-input" />
                 </div>
 
                 <div className="option-items">
@@ -92,7 +100,7 @@ const HotelLists = () => {
               </div>
               </div>
             </div>
-            <button className="hotel-list-search-btn">Search</button>
+            <button className="hotel-list-search-btn" onClick={handleClick}>Search</button>
           </section>
 
           <div className="hotel-lists-result">

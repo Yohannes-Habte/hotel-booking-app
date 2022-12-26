@@ -4,10 +4,10 @@ import { verifyAdmin } from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
-router.post("/:hotelId", verifyAdmin, roomPost);
+router.post("/:hotelId", roomPost);
 router.put("/:id", verifyAdmin, updateRoom);
-router.delete("/:id/hotelId", verifyAdmin, deleteRoom);
+router.delete("/:id/:hotelId",  deleteRoom);
 router.get("/:id", getOneRoom);
 router.get("/", getAllRooms);
 
-export default router;
+export default router; 

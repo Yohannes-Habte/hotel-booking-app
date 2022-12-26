@@ -15,17 +15,19 @@ import globalErrorHandler from "./middleware/globalErrorHandler.js";
 
 const app = express();
 app.use(cors());
-//! Step 2 for "cookie-aarser"
-app.use(cookieParser()); 
-
-app.use(express.json());
 const PORT = process.env.PORT || 5000; 
 
 dotenv.config();
 mongoose.connect(process.env.MONGO);
 mongoose.connection.on("open", () => console.log("Database connection established"));
 mongoose.connection.on("error", () => console.error); 
-// Every changes will be informed 
+
+// Middlewares
+//! Step 2 for "cookie-aarser"
+app.use(cookieParser()); 
+app.use(express.json());
+
+// Middleware - Every changes will be informed 
 app.use(morgan("tiny"));
 
 // Express middleware - End Points

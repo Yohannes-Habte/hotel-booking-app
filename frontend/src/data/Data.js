@@ -1,13 +1,15 @@
+import React from "react";
+import UseFetch from "../hooks/UseFetch";
+
 // Hotels By City
-import massawaHotel from "../assets/Massawa.jpg";
-import thailandHotel from "../assets/thailand.jpg";
-import nederland from "../assets/nederland.jpg";
+import Massawa from "../assets/Massawa.jpg";
+import Thailand from "../assets/thailand.jpg";
+import Berlin from "../assets/nederland.jpg";
 
 // Hotel Bed rooms
 import bedRoom1 from "../assets/room1.jpg";
 import bedRoom2 from "../assets/room2.jpg";
 import bedRoom3 from "../assets/room3.jpg";
-import bedRoom7 from "../assets/bedRoom7.jpg";
 import bedRoom5 from "../assets/room5.jpg";
 
 // Traditional Hotels
@@ -55,22 +57,22 @@ export const Hotels = [
 // Hotels By City
 export const HotelByCity = [
     {
-        image: nederland,
+        image: Berlin,
         alt: "Nederland hotel image",
-        title: "Nererland",
-        number: "123 Properties" 
+        title: "Berlin",
+        number: "222 Properties"
     }, 
     {
-        image: thailandHotel,
+        image: Thailand,
         alt: "Thailand hotel image",
         title: "Thailand",
         number: "234 Properties"
     }, 
     {
-        image: massawaHotel,
+        image: Massawa,
         alt: "Eritrea hotel image",
         title: "Massawa",
-        number:"321 Properties" 
+        number:<h3> {} Properties</h3> 
     }, 
 ]
 

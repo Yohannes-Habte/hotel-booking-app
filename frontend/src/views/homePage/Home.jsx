@@ -12,11 +12,11 @@ const Home = () => {
       <Header />
       <section className="home-container">
         <h1 className="home-title">Browse By City</h1>
-        <CityHotel />
+        <CityHotel /> {/* Featured */}
         <h1 className="home-title">Bed Room View</h1>
-        <BedRooms />
+        <BedRooms /> {/* PropertyList */}
         <h1 className="home-title">Traditional Houses</h1>
-        <TraditionalHotel />
+        <TraditionalHotel /> {/* FeaturedProperties */}
         <MailList />
       </section>
     </main>
